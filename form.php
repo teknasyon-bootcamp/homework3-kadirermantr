@@ -77,13 +77,7 @@ class Form {
         foreach ($this->fields as $field)
         {
             echo  "\t<label for='".$field["name"]."'>".$field["label"]."</label>" . PHP_EOL;
-
-            if (isset($field["value"])) {
-                echo "\t<input type='text' name='".$field["name"]."' value='".$field["value"]."' />" . PHP_EOL;
-            } else {
-                echo "\t<input type='text' name='".$field["name"]."' value='' />" . PHP_EOL;
-            }
-
+            echo "\t<input type='text' name='".$field["name"]."' value='".$field["value"]."' />" . PHP_EOL;
             echo " ";
         }
 
