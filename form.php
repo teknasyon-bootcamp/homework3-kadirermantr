@@ -26,23 +26,24 @@
  */
 
 class Form {
+    public array $fields = [];
+
     // Varsayılan construct fonksiyonu
     private function __construct(
         public string $action,
-        public string $method = "",
-        public array $fields = [],
+        public string $method,
     ) {}
 
     // Post formu olusturan fonksiyon
     public static function createPostForm(string $action): Form
     {
-        return new Form($action, 'POST');
+        return self::createForm($action, 'POST');
     }
 
     // Get formu olusturan fonksiyon
     public static function createGetForm(string $action): Form
     {
-        return new Form($action, 'GET');
+        return self::createForm($action, 'GET');
     }
 
     // Form olusturan fonksiyon
