@@ -24,3 +24,70 @@
  * 
  * > **Not: İsteyenler `app2.php` ve `form2.php` isminde dosyalar oluşturup sınıfa farklı özellikler kazandırabilir.
  */
+
+class Form {
+    // Public olarak tanımlanan ozellikler
+    public string $action;
+    public string $method = "";
+    public array $fields = [];
+
+    // Varsayılan construct fonksiyonu
+    private function __construct(string $action, string $method) {
+        $this->action = $action;
+        $this->method = $method;
+    }
+
+    // Post formu olusturan fonksiyon
+    public static function createPostForm(string $action): Form
+    {
+        return new Form($action, 'POST');
+    }
+
+    // Get formu olusturan fonksiyon
+    public static function createGetForm(string $action): Form
+    {
+        return new Form($action, 'GET');
+    }
+
+    // Form olusturan fonksiyon
+    public static function createForm(string $action, string $method): Form
+    {
+        return new Form($action, $method);
+    }
+
+    // Degerleri diziye ekleyen fonksiyon
+    public function addField(string $label, string $name, string $defaultValue = null): void
+    {
+        $field["label"] = $label;
+        $field["name"] = $name;
+        $field["value"] = $defaultValue;
+        array_push($this->fields,$field);
+    }
+
+    public function setMethod(string $method): void
+    {
+        $this->method = $method;
+    }
+
+    // HTML cıktısını gosteren fonksiyon
+    public function render(): void
+    {
+        echo "<form action='$this->action' method='$this->method'>" . PHP_EOL;
+
+        foreach ($this->fields as $field)
+        {
+            echo  "\t<label for='".$field["name"]."'>".$field["label"]."</label>" . PHP_EOL;
+
+            if (isset($field["value"])) {
+                echo "\t<input type='text' name='".$field["name"]."' value='".$field["value"]."' />" . PHP_EOL;
+            } else {
+                echo "\t<input type='text' name='".$field["name"]."' value='' />" . PHP_EOL;
+            }
+
+            echo " ";
+        }
+
+        echo "\t<button type='submit'>Gönder</button>" . PHP_EOL;
+        echo "</form>" . PHP_EOL;
+    }
+}
