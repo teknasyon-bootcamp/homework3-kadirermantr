@@ -26,16 +26,12 @@
  */
 
 class Form {
-    // Public olarak tanımlanan ozellikler
-    public string $action;
-    public string $method = "";
-    public array $fields = [];
-
     // Varsayılan construct fonksiyonu
-    private function __construct(string $action, string $method) {
-        $this->action = $action;
-        $this->method = $method;
-    }
+    private function __construct(
+        public string $action,
+        public string $method = "",
+        public array $fields = [],
+    ) {}
 
     // Post formu olusturan fonksiyon
     public static function createPostForm(string $action): Form
@@ -58,10 +54,13 @@ class Form {
     // Degerleri diziye ekleyen fonksiyon
     public function addField(string $label, string $name, string $defaultValue = null): void
     {
-        $field["label"] = $label;
-        $field["name"] = $name;
-        $field["value"] = $defaultValue;
-        array_push($this->fields,$field);
+        $field = [
+            "label" => $label,
+            "name"  => $name,
+            "value" => $defaultValue,
+        ];
+
+        $this->fields[] = $field;
     }
 
     public function setMethod(string $method): void
